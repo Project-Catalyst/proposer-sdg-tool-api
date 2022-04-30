@@ -19,6 +19,10 @@ app.use(cors())
 
 //REQUEST HANDLERS
 app.use('/api/v1/humanRights', humanRightsRoute)
+app.use('/api/v1/test', (req, res) => {
+  console.log("calling endpoint")
+  res.status(200).json({msg: "success"})
+})
 
 // ERROR HANDLING
 app.use(notFoundMiddleware)

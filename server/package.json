@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
+    "debug": "nodemon --inspect=0.0.0.0:9229 loader.js",
     "dev": "nodemon loader.js",
     "create-tables": "node models/create-tables.js",
     "seed": "npx sequelize-cli db:seed:all --debug",
