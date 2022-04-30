@@ -9,6 +9,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler')
 
 // ROUTES
 const humanRightsRoute = require('./routes/human-rights')
+const sdgGoalsRoute = require('./routes/sdg-goals')
 
 // MIDDLEWARE
 app.use(express.json())
@@ -19,6 +20,7 @@ app.use(cors())
 
 //REQUEST HANDLERS
 app.use('/api/v1/humanRights', humanRightsRoute)
+app.use('/api/v1/sdgGoals', sdgGoalsRoute)
 app.use('/api/v1/test', (req, res) => {
   console.log("calling endpoint")
   res.status(200).json({msg: "success"})
