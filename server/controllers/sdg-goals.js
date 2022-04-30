@@ -7,31 +7,24 @@ const { Op } = require('sequelize')
 const getReq = async (req, res) => {
   try {
     var where = {}
-    if (req.query?.ids && req.query?.titles) {
-      where = {
-        [Op.or]: [{
-          id: req.query?.ids ? req.query.ids : []
-        }, {
-          title: req.query?.titles ? req.query.titles : []
-        }]
-      }
-    } else if (req.query?.ids) {
-      where = { id: req.query.ids }
-    } else if (req.query?.titles) {
-      where = { title: req.query.titles }
+    if (Object.keys(req.query).length > 1) {
+      const filterArray = []
+      Object.keys(req.query).map(q => {
+        if (q === 'ids') filterArray.push({ id: req.query.ids })
+        if (q === 'titles') filterArray.push({ title: req.query.titles })
+        if (q === 'keywords') filterArray.push({ '$Keywords.title$': req.query.keywords })
+      })
+      where = { [Op.or]: filterArray }
+    } else {
+      Object.keys(req.query).map(q => {
+        if (q === 'ids') where = { id: req.query.ids }
+        if (q === 'titles') where = { title: req.query.titles }
+        if (q === 'keywords') where = { '$Keywords.title$': req.query.keywords }
+      })
     }
 
-    const sdgGoals = await sequelize.models.SdgGoal.findAll({
-      required: true,
-      where: where,
-      include: [
-        {
-          model: sequelize.models.Keyword,
-          where: req.query?.keywords ? { title: req.query.keywords } : {}
-        }
-      ]
-    })
-    res.status(StatusCodes.OK).json({ sdgGoals, count: sdgGoals.length })
+    const sdgGoals = await sequelize.models.SdgGoal.findAll({ where: where, include: [sequelize.models.Keyword] })
+    res.status(StatusCodes.OK).json({ count: sdgGoals.length, sdgGoals })
 
   } catch (e) {
     res.status(StatusCodes.BAD_REQUEST).json({ error: e.toString() })
