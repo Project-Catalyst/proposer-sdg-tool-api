@@ -3,6 +3,7 @@
 .env.docker
 
 server/seeders/20220417105270-humanrights.js
+server/database
 
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
