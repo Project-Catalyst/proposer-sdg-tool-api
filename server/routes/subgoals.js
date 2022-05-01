@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-const { filterSdgGoals } = require('../controllers/sdg-goals')
+const { filterSubgoals } = require('../controllers/subgoals')
 
 router
   .route('/')
-  .get(filterSdgGoals)
+  .get(filterSubgoals)
 
 module.exports = router

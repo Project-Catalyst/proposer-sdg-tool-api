@@ -1,10 +1,11 @@
 const { StatusCodes } = require('http-status-codes')
 const { sequelize } = require('../db')
 const { Op } = require('sequelize')
+const { searchByColumnName } = require('../utils/database-helpers')
 
 // Public Route
 // GET /api/v1/sdgGoals
-const getReq = async (req, res) => {
+const filterSdgGoals = async (req, res) => {
   try {
     var where = {}
     if (Object.keys(req.query).length > 1) {
@@ -31,6 +32,24 @@ const getReq = async (req, res) => {
   }
 }
 
+// Public Route
+// GET /api/v1/sdgGoals/titles
+const searchThroughTitles = async (req, res) => {
+  try {
+    const where = {}
+    Object.keys(req.query).map(q => {
+      if (q === 'ids') where.id = req.query.ids
+      if (q === 'title') where.title = searchByColumnName("title", req.query.title)
+    })
+
+    const sdgGoals = await sequelize.models.SdgGoal.findAll({ where })
+    res.status(StatusCodes.OK).json({ count: sdgGoals.length, sdgGoals })
+
+  } catch (e) {
+    res.status(StatusCodes.BAD_REQUEST).json({ error: e.toString() })
+  }
+}
+
 module.exports = {
-  getReq
+  filterSdgGoals
 }
