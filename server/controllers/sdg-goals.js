@@ -35,6 +35,8 @@ const filterSdgGoals = async (req, res) => {
 // Public Route
 // GET /api/v1/sdgGoals/titles
 const searchThroughTitles = async (req, res) => {
+  if (!req.query?.ids) next(new CustomError.BadRequestError("Endpoint requires selected Sdg Goal ids to work properly. Please pass ids in the query params"))
+
   try {
     const where = {}
     Object.keys(req.query).map(q => {
@@ -51,5 +53,6 @@ const searchThroughTitles = async (req, res) => {
 }
 
 module.exports = {
-  filterSdgGoals
+  filterSdgGoals,
+  searchThroughTitles
 }
