@@ -2,6 +2,7 @@ const { StatusCodes } = require('http-status-codes')
 const { sequelize } = require('../db')
 const { Op } = require('sequelize')
 const { searchByColumnName } = require('../utils/database-helpers')
+const CustomError = require('../errors')
 
 // Public Route
 // GET /api/v1/sdgGoals
@@ -34,15 +35,13 @@ const filterSdgGoals = async (req, res) => {
 
 // Public Route
 // GET /api/v1/sdgGoals/titles
-const searchThroughTitles = async (req, res) => {
-  if (!req.query?.ids) next(new CustomError.BadRequestError("Endpoint requires selected Sdg Goal ids to work properly. Please pass ids in the query params"))
+const searchThroughTitles = async (req, res, next) => {
+  if (!req.query?.title) next(new CustomError.BadRequestError("Endpoint requires title to work properly. Please pass title in the query params"))
 
   try {
-    const where = {}
-    Object.keys(req.query).map(q => {
-      if (q === 'ids') where.id = req.query.ids
-      if (q === 'title') where.title = searchByColumnName("title", req.query.title)
-    })
+    const where = {
+      title: searchByColumnName("title", req.query.title)
+    }
 
     const sdgGoals = await sequelize.models.SdgGoal.findAll({ where })
     res.status(StatusCodes.OK).json({ count: sdgGoals.length, sdgGoals })
