@@ -25,7 +25,13 @@ const filterSdgGoals = async (req, res) => {
       })
     }
 
-    const sdgGoals = await sequelize.models.SdgGoal.findAll({ where: where, include: [sequelize.models.Keyword] })
+    const sdgGoals = await sequelize.models.SdgGoal.findAll({
+      where: where, include: [
+        {
+          model: sequelize.models.Keyword,
+          through: { attributes: [] }
+        }]
+    })
     res.status(StatusCodes.OK).json({ count: sdgGoals.length, sdgGoals })
 
   } catch (e) {

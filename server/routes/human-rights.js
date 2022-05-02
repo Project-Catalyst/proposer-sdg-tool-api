@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-const { getReq } = require('../controllers/human-rights')
+const { humanRightsFilter } = require('../controllers/human-rights')
 
 router
   .route('/')
-  .get(getReq)
+  .get(humanRightsFilter)
 
 module.exports = router

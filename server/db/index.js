@@ -8,7 +8,7 @@ const init = () => {
             dialectOptions: { connectTimeout: 10000 },
             logQueryParameters: true,
             benchmark: true,
-            logging: false
+            logging: console.log
         })
         loadModelsAndRelations(sequelize)
         return sequelize
