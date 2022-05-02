@@ -3,11 +3,11 @@ const { sequelize } = require('../db')
 const { Op } = require('sequelize')
 const CustomError = require('../errors')
 
+
 // Public Route
 // GET /api/v1/subgoals
 const filterSubgoals = async (req, res, next) => {
-
-  if (!req.query?.sdgIds) next(new CustomError.BadRequestError("Endpoint requires selected Sdg Goal ids to work properly. Please pass sdgIds in the query params"))
+  if (!req.query?.sdgIds) return next(new CustomError.BadRequestError("Endpoint requires selected Sdg Goal ids to work properly. Please pass sdgIds in the query params"))
 
   try {
     var where = {}
@@ -17,12 +17,9 @@ const filterSubgoals = async (req, res, next) => {
         if (q === 'sdgIds') filterArray.push({ SdgGoalId: req.query.sdgIds })
         if (q === 'titles') filterArray.push({ title: req.query.titles })
       })
-      where = { [Op.or]: filterArray }
+      where = { [Op.and]: filterArray }
     } else {
-      Object.keys(req.query).map(q => {
-        if (q === 'sdgIds') where = { SdgGoalId: req.query.sdgIds }
-        if (q === 'titles') where = { title: req.query.titles }
-      })
+      where = { SdgGoalId: req.query.sdgIds }
     }
 
     const subgoals = await sequelize.models.Subgoal.findAll({ where })

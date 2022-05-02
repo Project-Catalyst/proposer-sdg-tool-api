@@ -5,7 +5,6 @@ const { Op } = require('sequelize')
 // Public Route
 // GET /api/v1/humanRights
 const getReq = async (req, res) => {
-  debugger
   try {
     const humanRights = await sequelize.models.HumanRight.findAll({
       where: {

@@ -43,7 +43,6 @@ const start = async () => {
       console.log(`listening on port ${port}`)
     })
   } catch (error) {
-    debugger
     console.log(error)
   }
 }
