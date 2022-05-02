@@ -11,6 +11,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler')
 const humanRightsRoute = require('./routes/human-rights')
 const sdgGoalsRoute = require('./routes/sdg-goals')
 const subgoalsRoute = require('./routes/subgoals')
+const keywordsRoute = require('./routes/keywords')
 
 // MIDDLEWARE
 app.use(express.json())
@@ -21,6 +22,7 @@ app.use(cors())
 
 //REQUEST HANDLERS
 // app.use('/api/v1/humanRights', humanRightsRoute)
+app.use('/api/v1/keywords', keywordsRoute)
 app.use('/api/v1/sdgGoals', sdgGoalsRoute)
 app.use('/api/v1/subgoals', subgoalsRoute)
 // app.use('/api/v1/test', (req, res) => {
