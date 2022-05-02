@@ -34,7 +34,7 @@ const filterSdgGoals = async (req, res) => {
 }
 
 // Public Route
-// GET /api/v1/sdgGoals/titles
+// GET /api/v1/sdgGoals/searchTitles
 const searchThroughTitles = async (req, res, next) => {
   if (!req.query?.title) next(new CustomError.BadRequestError("Endpoint requires title to work properly. Please pass title in the query params"))
 
