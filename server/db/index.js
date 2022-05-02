@@ -24,6 +24,9 @@ const loadModelsAndRelations = (sequelize) => {
     require('../models/tables/Metrics')(sequelize)
     require('../models/tables/SdgGoals')(sequelize)
     require('../models/tables/Subgoals')(sequelize)
+    require('../models/tables/Countries')(sequelize)
+    require('../models/tables/Regions')(sequelize)
+    require('../models/tables/Themes')(sequelize)
 
     sequelize.models.SdgGoal.belongsToMany(sequelize.models.Keyword, { through: 'SdgGoalsToKeywordsMap', timestamps: false })
     sequelize.models.Keyword.belongsToMany(sequelize.models.SdgGoal, { through: 'SdgGoalsToKeywordsMap', timestamps: false })

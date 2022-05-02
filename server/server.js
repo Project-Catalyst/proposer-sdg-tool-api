@@ -12,6 +12,9 @@ const humanRightsRoute = require('./routes/human-rights')
 const sdgGoalsRoute = require('./routes/sdg-goals')
 const subgoalsRoute = require('./routes/subgoals')
 const keywordsRoute = require('./routes/keywords')
+const countriesRoute = require('./routes/countries')
+const regionsRoute = require('./routes/regions')
+const themesRoute = require('./routes/themes')
 
 // MIDDLEWARE
 app.use(express.json())
@@ -23,12 +26,12 @@ app.use(cors())
 //REQUEST HANDLERS
 // app.use('/api/v1/humanRights', humanRightsRoute)
 app.use('/api/v1/keywords', keywordsRoute)
+app.use('/api/v1/countries', countriesRoute)
+app.use('/api/v1/regions', regionsRoute)
+app.use('/api/v1/themes', themesRoute)
 app.use('/api/v1/sdgGoals', sdgGoalsRoute)
 app.use('/api/v1/subgoals', subgoalsRoute)
-// app.use('/api/v1/test', (req, res) => {
-//   console.log("calling endpoint")
-//   res.status(200).json({ msg: "success" })
-// })
+
 
 // ERROR HANDLING
 app.use(notFoundMiddleware)
