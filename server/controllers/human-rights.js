@@ -1,13 +1,12 @@
 const { StatusCodes } = require('http-status-codes')
 const { sequelize } = require('../db')
 const { Op } = require('sequelize')
-const CustomError = require('../errors')
+const { assertSdgAndSubgoalIdsPassed } = require('../utils/database-helpers')
 
 // Public Route
 // GET /api/v1/humanRights
 const humanRightsFilter = async (req, res, next) => {
-  if (!req.query?.sdgIds) return next(new CustomError.BadRequestError("Endpoint requires sdg goal ids to work properly. Please pass sdgIds in the query params"))
-  if (!req.query?.sgIds) return next(new CustomError.BadRequestError("Endpoint requires subgoal ids to work properly. Please pass sgIds in the query params"))
+  assertSdgAndSubgoalIdsPassed(req)
 
   try {
     const where = {
@@ -18,9 +17,9 @@ const humanRightsFilter = async (req, res, next) => {
     }
     const filterArr = []
     Object.keys(req.query).map(q => {
-      if(q === "countries") filterArr.push({'$Countries.name$': req.query.countries})
-      if(q === "regions") filterArr.push({'$Regions.name$': req.query.regions})
-      if(q === "themes") filterArr.push({'$Themes.name$': req.query.themes})
+      if (q === "countries") filterArr.push({ '$Countries.name$': req.query.countries })
+      if (q === "regions") filterArr.push({ '$Regions.name$': req.query.regions })
+      if (q === "themes") filterArr.push({ '$Themes.name$': req.query.themes })
     })
     where[Op.and].push(...filterArr)
 

@@ -3,6 +3,7 @@ const helmet = require('helmet')
 const xss = require('xss-clean')
 const cors = require('cors')
 const app = express()
+const a = require('express-async-errors');
 const { sequelize } = require('./db')
 const notFoundMiddleware = require('./middleware/not-found')
 const errorHandlerMiddleware = require('./middleware/error-handler')

@@ -42,7 +42,7 @@ const filterSdgGoals = async (req, res) => {
 // Public Route
 // GET /api/v1/sdgGoals/titles
 const searchThroughTitles = async (req, res, next) => {
-  if (!req.query?.title) return next(new CustomError.BadRequestError("Endpoint requires title to work properly. Please pass title in the query params"))
+  if (!req.query?.title) throw new CustomError.BadRequestError("Endpoint requires title to work properly. Please pass title in the query params")
 
   try {
     const where = {

@@ -2,12 +2,12 @@ const { StatusCodes } = require('http-status-codes')
 const { sequelize } = require('../db')
 const { Op } = require('sequelize')
 const CustomError = require('../errors')
-
+const { assertSdgIdsPassed } = require('../utils/database-helpers')
 
 // Public Route
 // GET /api/v1/subgoals
 const filterSubgoals = async (req, res, next) => {
-  if (!req.query?.sdgIds) return next(new CustomError.BadRequestError("Endpoint requires selected Sdg Goal ids to work properly. Please pass sdgIds in the query params"))
+  assertSdgIdsPassed(req)
 
   try {
     var where = {}
