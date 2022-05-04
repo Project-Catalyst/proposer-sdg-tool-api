@@ -42,6 +42,15 @@ const loadModelsAndRelations = (sequelize) => {
 
     sequelize.models.Subgoal.belongsToMany(sequelize.models.HumanRight, { through: 'SubgoalsToHumanRightsMap', timestamps: false })
     sequelize.models.HumanRight.belongsToMany(sequelize.models.Subgoal, { through: 'SubgoalsToHumanRightsMap', timestamps: false })
+
+    sequelize.models.Country.belongsToMany(sequelize.models.HumanRight, { through: 'CountryToHumanRightsMap', timestamps: false })
+    sequelize.models.HumanRight.belongsToMany(sequelize.models.Country, { through: 'CountryToHumanRightsMap', timestamps: false })
+
+    sequelize.models.Region.belongsToMany(sequelize.models.HumanRight, { through: 'RegionToHumanRightsMap', timestamps: false })
+    sequelize.models.HumanRight.belongsToMany(sequelize.models.Region, { through: 'RegionToHumanRightsMap', timestamps: false })
+
+    sequelize.models.Theme.belongsToMany(sequelize.models.HumanRight, { through: 'ThemeToHumanRightsMap', timestamps: false })
+    sequelize.models.HumanRight.belongsToMany(sequelize.models.Theme, { through: 'ThemeToHumanRightsMap', timestamps: false })
 }
 
 module.exports = { sequelize: init() }

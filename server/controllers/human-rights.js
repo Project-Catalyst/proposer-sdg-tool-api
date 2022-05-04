@@ -11,11 +11,19 @@ const humanRightsFilter = async (req, res, next) => {
 
   try {
     const where = {
-      [Op.and]: [
+      [Op.or]: [
         { '$SdgGoals.id$': req.query.sdgIds },
-        { '$Subgoals.id$': req.query.sgIds, }
+        { '$Subgoals.id$': req.query.sgIds }
       ]
     }
+    const filterArr = []
+    Object.keys(req.query).map(q => {
+      if(q === "countries") filterArr.push({'$Countries.name$': req.query.countries})
+      if(q === "regions") filterArr.push({'$Regions.name$': req.query.regions})
+      if(q === "themes") filterArr.push({'$Themes.name$': req.query.themes})
+    })
+    where[Op.and] = filterArr
+
     const humanRights = await sequelize.models.HumanRight.findAll({
       where: where,
       include: [
@@ -27,6 +35,24 @@ const humanRightsFilter = async (req, res, next) => {
         },
         {
           model: sequelize.models.Subgoal,
+          require: true,
+          duplicating: false,
+          through: { attributes: [] }
+        },
+        {
+          model: sequelize.models.Country,
+          require: true,
+          duplicating: false,
+          through: { attributes: [] }
+        },
+        {
+          model: sequelize.models.Region,
+          require: true,
+          duplicating: false,
+          through: { attributes: [] }
+        },
+        {
+          model: sequelize.models.Theme,
           require: true,
           duplicating: false,
           through: { attributes: [] }
