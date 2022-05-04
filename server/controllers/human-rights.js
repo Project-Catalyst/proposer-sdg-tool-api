@@ -11,7 +11,7 @@ const humanRightsFilter = async (req, res, next) => {
 
   try {
     const where = {
-      [Op.or]: [
+      [Op.and]: [
         { '$SdgGoals.id$': req.query.sdgIds },
         { '$Subgoals.id$': req.query.sgIds }
       ]
@@ -22,7 +22,7 @@ const humanRightsFilter = async (req, res, next) => {
       if(q === "regions") filterArr.push({'$Regions.name$': req.query.regions})
       if(q === "themes") filterArr.push({'$Themes.name$': req.query.themes})
     })
-    where[Op.and] = filterArr
+    where[Op.and].push(...filterArr)
 
     const humanRights = await sequelize.models.HumanRight.findAll({
       where: where,
