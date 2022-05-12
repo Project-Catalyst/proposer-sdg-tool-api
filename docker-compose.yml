@@ -26,6 +26,7 @@ services:
       DB: ${DB}
       HOST: ${HOST}
       PORT: ${PORT}
+    restart: always
     build: ./server
     ports:
       - "5000:5000"
