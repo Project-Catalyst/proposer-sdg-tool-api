@@ -15,6 +15,7 @@ const keywordsRoute = require('./routes/keywords')
 const countriesRoute = require('./routes/countries')
 const regionsRoute = require('./routes/regions')
 const themesRoute = require('./routes/themes')
+const metricsRoute = require('./routes/metrics')
 const humanRightsRoute = require('./routes/human-rights')
 
 // MIDDLEWARE
@@ -31,6 +32,7 @@ app.use('/api/v1/regions', regionsRoute)
 app.use('/api/v1/themes', themesRoute)
 app.use('/api/v1/sdgGoals', sdgGoalsRoute)
 app.use('/api/v1/subgoals', subgoalsRoute)
+app.use('/api/v1/metrics', metricsRoute)
 app.use('/api/v1/humanRights', humanRightsRoute)
 
 // ERROR HANDLING MIDDLEWARE
